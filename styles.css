@@ -1,3 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #121212;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    height: 90vh;
+    max-width: 1200px;
+}
+
+.slider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    height: 100%;
+}
+
 .human-slider {
     overflow-y: hidden; /* Забороняємо скролювання */
 }
@@ -15,4 +48,59 @@
 
 .hidden {
     display: none; /* Приховуємо неактивні слайди */
+}
+
+.slider h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+    color: #fff;
+}
+
+.slide img {
+    max-width: 100%;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.selected {
+    opacity: 1 !important;
+    border-color: #f39c12 !important;
+}
+
+.correct {
+    border-color: green !important;
+}
+
+.wrong {
+    border-color: red !important;
+}
+
+#result-message {
+    display: none;
+    position: absolute;
+    background: #464646;
+    padding: 50px;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+    }
+
+    .slider {
+        width: 48%;
+    }
 }
