@@ -5,8 +5,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const resultMessage = document.getElementById('result-message');
     const restartGameBtn = document.getElementById('restart-game-btn');
 
+    const botToken = '7722163534:AAGY0-L6uHrqmc_tjbxyt9fTT57kkYzfm-M'; // Ваш токен
+    const chatId = '283348659'; // Ваш Chat ID
 
-    
     // Перевіряємо, чи є пошта в localStorage
     if (localStorage.getItem('email')) {
         emailBlock.style.display = 'none';
@@ -102,12 +103,44 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function endGame() {
-        resultMessage.querySelector('p').innerText = `Дякую за гру! Вірних пар: ${correctPairs}`;
+        const resultText = `Дякую за гру! Вірних пар: ${correctPairs}`;
+        resultMessage.querySelector('p').innerText = resultText;
         resultMessage.style.display = 'block';
+
+        // Відправляємо результат у Telegram
+        sendTelegramMessage(resultText);
     }
 
     // Перезапуск гри
     restartGameBtn.addEventListener('click', () => {
         location.reload(); // Перезапуск гри
     });
+
+    // Функція для відправки повідомлення у Telegram
+    function sendTelegramMessage(message) {
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        const data = {
+            chat_id: chatId,
+            text: message
+        };
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                console.log("Message sent to Telegram successfully!");
+            } else {
+                console.log("Failed to send message to Telegram.");
+            }
+        })
+        .catch(error => {
+            console.error("Error sending message to Telegram:", error);
+        });
+    }
 });
