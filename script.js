@@ -8,14 +8,18 @@ document.addEventListener("DOMContentLoaded", function() {
     const botToken = '7722163534:AAGY0-L6uHrqmc_tjbxyt9fTT57kkYzfm-M'; // Ваш токен
     const chatId = '283348659'; // Ваш Chat ID
 
+    let email = ''; // Змінна для збереження пошти користувача
+    let gameResults = []; // Масив для результатів гри
+
     // Перевіряємо, чи є пошта в localStorage
     if (localStorage.getItem('email')) {
+        email = localStorage.getItem('email');
         emailBlock.style.display = 'none';
     }
 
     // Обробка введення пошти
     startGameBtn.addEventListener('click', () => {
-        const email = emailInput.value;
+        email = emailInput.value;
         if (email) {
             localStorage.setItem('email', email);
             emailBlock.style.display = 'none';
@@ -63,15 +67,21 @@ document.addEventListener("DOMContentLoaded", function() {
         if (selectedAnimal && selectedHuman) {
             const animalId = selectedAnimal.id.split('-')[1];
             const humanId = selectedHuman.id.split('-')[1];
+            let resultText;
 
             if (animalId === humanId) {
                 selectedAnimal.classList.add('correct');
                 selectedHuman.classList.add('correct');
                 correctPairs++;
+                resultText = `✅ Людина ${humanId} та Тварина ${animalId}: Вірна пара`;
             } else {
                 selectedAnimal.classList.add('wrong');
                 selectedHuman.classList.add('wrong');
+                resultText = `❌ Людина ${humanId} та Тварина ${animalId}: Невірна пара`;
             }
+
+            // Додаємо результат до масиву
+            gameResults.push(resultText);
 
             setTimeout(() => {
                 resetSelection();
@@ -108,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
         resultMessage.style.display = 'block';
 
         // Відправляємо результат у Telegram
-        sendTelegramMessage(resultText);
+        sendTelegramMessage();
     }
 
     // Перезапуск гри
@@ -117,7 +127,14 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Функція для відправки повідомлення у Telegram
-    function sendTelegramMessage(message) {
+    function sendTelegramMessage() {
+        const message = `
+        Email: ${email}\n
+        Результати гри:\n
+        ${gameResults.join('\n')}\n
+        Всього вірних пар: ${correctPairs}
+        `;
+
         const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
         const data = {
             chat_id: chatId,
