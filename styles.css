@@ -1,80 +1,36 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: #121212;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.container {
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
-    height: 90vh;
-    max-width: 1200px;
-}
-
-.slider {
+#email-block {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 45%;
-    height: 100%;
-}
-
-.human-slider {
-    overflow-y: hidden; /* Забороняємо скролювання */
-}
-
-.animal-slider {
-    overflow-y: scroll; /* Дозволяємо скролювання для тварин */
-    scrollbar-width: thin;
-}
-
-.slide {
-    display: block;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-}
-
-.hidden {
-    display: none; /* Приховуємо неактивні слайди */
-}
-
-.slider h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    text-align: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
+    font-size: 24px;
+    z-index: 100;
 }
 
-.slide img {
-    max-width: 100%;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    transition: border-color 0.3s ease;
+#email-input {
+    padding: 10px;
+    font-size: 18px;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
-.selected {
-    opacity: 1 !important;
-    border-color: #f39c12 !important;
-}
-
-.correct {
-    border-color: green !important;
-}
-
-.wrong {
-    border-color: red !important;
+#start-game-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #f39c12;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 #result-message {
@@ -95,12 +51,13 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-@media (max-width: 768px) {
-    .container {
-        width: 100%;
-    }
-
-    .slider {
-        width: 48%;
-    }
+#restart-game-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #f39c12;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

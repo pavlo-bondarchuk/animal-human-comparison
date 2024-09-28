@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="email-block">
+        <h2>Enter your email to start the game</h2>
+        <input type="email" id="email-input" placeholder="Enter your email">
+        <button id="start-game-btn">Start Game</button>
+    </div>
+
     <div class="container">
         <div class="slider human-slider">
             <h2>Human Photos</h2>
@@ -40,7 +46,11 @@
             </div>
         </div>
     </div>
-    <div id="result-message"></div>
+
+    <div id="result-message">
+        <p></p>
+        <button id="restart-game-btn">Restart Game</button>
+    </div>
 
     <script src="script.js"></script>
 </body>

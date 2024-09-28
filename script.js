@@ -1,4 +1,26 @@
 document.addEventListener("DOMContentLoaded", function() {
+    const emailBlock = document.getElementById('email-block');
+    const startGameBtn = document.getElementById('start-game-btn');
+    const emailInput = document.getElementById('email-input');
+    const resultMessage = document.getElementById('result-message');
+    const restartGameBtn = document.getElementById('restart-game-btn');
+
+    // Перевіряємо, чи є пошта в localStorage
+    if (localStorage.getItem('email')) {
+        emailBlock.style.display = 'none';
+    }
+
+    // Обробка введення пошти
+    startGameBtn.addEventListener('click', () => {
+        const email = emailInput.value;
+        if (email) {
+            localStorage.setItem('email', email);
+            emailBlock.style.display = 'none';
+        } else {
+            alert('Please enter a valid email.');
+        }
+    });
+
     const animalSlides = document.querySelectorAll('.animal-slider .slide');
     const humanSlides = document.querySelectorAll('.human-slider .slide');
     let selectedAnimal = null;
@@ -78,8 +100,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function endGame() {
-        const resultMessage = document.getElementById('result-message');
-        resultMessage.innerHTML = `Дякую за гру! Вірних пар: ${correctPairs}`;
+        resultMessage.querySelector('p').innerText = `Дякую за гру! Вірних пар: ${correctPairs}`;
         resultMessage.style.display = 'block';
     }
+
+    // Перезапуск гри
+    restartGameBtn.addEventListener('click', () => {
+        location.reload(); // Перезапуск гри
+    });
 });
