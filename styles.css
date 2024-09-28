@@ -29,11 +29,15 @@ body {
     align-items: center;
     width: 45%;
     height: 100%;
-    overflow-y: hidden;
 }
 
-.slider.human-slider {
-    overflow-y: hidden; /* Забороняємо прокрутку до вибору пари */
+.human-slider {
+    overflow-y: hidden; /* Колонка людей не скролюється */
+}
+
+.animal-slider {
+    overflow-y: scroll; /* Колонка тварин дозволяє скрол */
+    scrollbar-width: thin; /* Стиль для скролу */
 }
 
 .slider h2 {
@@ -70,16 +74,26 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none; /* Сховати елемент */
 }
 
 /* Стилі для повідомлення після гри */
 #result-message {
     display: none;
-    font-size: 24px;
+    position: absolute;
+    background: #464646;
+    padding: 50px;
+    border-radius: 50px;
     color: #fff;
+    font-size: 24px;
     text-align: center;
-    margin-top: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 768px) {

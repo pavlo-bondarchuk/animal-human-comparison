@@ -26,34 +26,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
     humanSlides.forEach(human => {
         human.addEventListener('click', function() {
-            if (selectedHuman) {
-                selectedHuman.classList.remove('selected');
+            if (!selectedHuman && human.classList.contains('hidden') === false) {
+                selectedHuman = this;
+                selectedHuman.classList.add('selected');
             }
-            selectedHuman = this;
-            selectedHuman.classList.add('selected');
-            // Не дозволяємо вибирати інше фото людини поки не вибрана пара
             compareSelection();
         });
     });
 
     function compareSelection() {
         if (selectedAnimal && selectedHuman) {
-            // Порівняння пари (можна налаштувати логіку за потреби)
             const animalId = selectedAnimal.id.split('-')[1];
             const humanId = selectedHuman.id.split('-')[1];
 
             if (animalId === humanId) {
-                // Вірна пара
                 selectedAnimal.classList.add('correct');
                 selectedHuman.classList.add('correct');
                 correctPairs++;
             } else {
-                // Невірна пара
                 selectedAnimal.classList.add('wrong');
                 selectedHuman.classList.add('wrong');
             }
 
-            // Затримка для показу результату
             setTimeout(() => {
                 resetSelection();
                 showNextHumanSlide();
@@ -64,6 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function resetSelection() {
         if (selectedAnimal) {
             selectedAnimal.classList.remove('selected', 'correct', 'wrong');
+            selectedAnimal.classList.add('hidden'); // Приховуємо вибрану тварину
         }
         if (selectedHuman) {
             selectedHuman.classList.remove('selected', 'correct', 'wrong');
@@ -73,9 +68,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function showNextHumanSlide() {
-        // Прибираємо поточне фото людини
         humanSlides[currentHumanIndex].classList.add('hidden');
-        // Переходимо до наступного фото або починаємо знову
         currentHumanIndex++;
         if (currentHumanIndex >= humanSlides.length) {
             endGame();
@@ -85,7 +78,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function endGame() {
-        // Показуємо результат
         const resultMessage = document.getElementById('result-message');
         resultMessage.innerHTML = `Дякую за гру! Вірних пар: ${correctPairs}`;
         resultMessage.style.display = 'block';
