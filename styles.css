@@ -8,17 +8,15 @@ body {
     background-color: #121212;
     color: #fff;
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
-    margin: 0;
+    overflow: hidden; /* Запобігаємо прокручуванню сторінки */
 }
 
 .container {
     display: flex;
     justify-content: space-between;
     width: 80%;
+    height: 100vh; /* Задаємо висоту для контейнера, щоб повністю заповнити екран */
 }
 
 .slider {
@@ -26,6 +24,9 @@ body {
     flex-direction: column;
     align-items: center;
     width: 45%;
+    height: 90vh; /* Обмежуємо висоту слайдерів, щоб вони не виходили за межі екрану */
+    overflow-y: scroll; /* Додаємо вертикальне прокручування для слайдерів */
+    scrollbar-width: thin; /* Для кращого вигляду смуги прокрутки */
 }
 
 .slider h2 {
@@ -57,14 +58,30 @@ body {
     border-color: #f39c12 !important;
 }
 
+/* Додаємо стилі для скроллбару, якщо потрібно */
+.slider::-webkit-scrollbar {
+    width: 8px;
+}
+
+.slider::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+.slider::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
         width: 90%;
+        height: auto;
     }
 
     .slider {
         width: 100%;
         margin-bottom: 20px;
+        height: 50vh; /* Для мобільних пристроїв висота колонок може бути меншою */
     }
 }
