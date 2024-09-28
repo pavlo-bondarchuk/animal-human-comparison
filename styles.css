@@ -1,3 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #121212;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    height: 90vh;
+    max-width: 1200px;
+}
+
+.slider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    height: 100%;
+}
+
+.human-slider {
+    overflow-y: hidden;
+    /* Забороняємо прокрутку для людей */
+}
+
+.animal-slider {
+    overflow-y: scroll;
+    /* Дозволяємо прокрутку для тварин */
+    scrollbar-width: thin;
+    /* Налаштування для скролу */
+}
+
+.slider h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+    color: #fff;
+}
+
+.slide {
+    margin-bottom: 20px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.slide img {
+    max-width: 100%;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.selected {
+    opacity: 1 !important;
+    border-color: #f39c12 !important;
+}
+
+.correct {
+    border-color: green !important;
+}
+
+.wrong {
+    border-color: red !important;
+}
+
+.hidden {
+    display: none;
+    /* Приховуємо вибрану пару тварин */
+}
+
+/* Стилі для блоку з поштою перед грою */
 #email-block {
     display: flex;
     flex-direction: column;
@@ -33,6 +117,7 @@
     cursor: pointer;
 }
 
+/* Стилі для повідомлення після гри */
 #result-message {
     display: none;
     position: absolute;
@@ -60,4 +145,15 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+/* Адаптивний дизайн для мобільних пристроїв */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+    }
+
+    .slider {
+        width: 48%;
+    }
 }
