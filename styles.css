@@ -11,26 +11,29 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center; /* Вирівнювання по вертикалі */
-    overflow: hidden; /* Запобігаємо прокручуванню сторінки */
+    align-items: center;
+    overflow: hidden;
 }
 
 .container {
     display: flex;
     justify-content: space-between;
     width: 80%;
-    height: 90vh; /* Задаємо висоту контейнера */
-    max-width: 1200px; /* Максимальна ширина для великих екранів */
+    height: 90vh;
+    max-width: 1200px;
 }
 
 .slider {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 45%; /* Дві колонки по 45% ширини кожна */
-    height: 100%; /* Повна висота слайдера */
-    overflow-y: scroll; /* Додаємо вертикальне прокручування для слайдерів */
-    scrollbar-width: thin; /* Для кращого вигляду смуги прокрутки */
+    width: 45%;
+    height: 100%;
+    overflow-y: hidden;
+}
+
+.slider.human-slider {
+    overflow-y: hidden; /* Забороняємо прокрутку до вибору пари */
 }
 
 .slider h2 {
@@ -53,36 +56,38 @@ body {
     transition: border-color 0.3s ease;
 }
 
-.slide img:hover {
-    border-color: #f39c12;
-}
-
 .selected {
     opacity: 1 !important;
     border-color: #f39c12 !important;
 }
 
-/* Додаємо стилі для скроллбару, якщо потрібно */
-.slider::-webkit-scrollbar {
-    width: 8px;
+.correct {
+    border-color: green !important;
 }
 
-.slider::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 10px;
+.wrong {
+    border-color: red !important;
 }
 
-.slider::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
+.hidden {
+    display: none;
 }
 
-/* Адаптація для мобільних пристроїв */
+/* Стилі для повідомлення після гри */
+#result-message {
+    display: none;
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+}
+
 @media (max-width: 768px) {
     .container {
-        width: 100%; /* Повна ширина контейнера для мобільних */
+        width: 100%;
     }
 
     .slider {
-        width: 48%; /* Колонки будуть трохи вужчими, щоб вміститися на екрані */
+        width: 48%;
     }
 }
