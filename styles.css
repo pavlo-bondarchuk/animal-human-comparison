@@ -9,6 +9,9 @@ body {
     color: #fff;
     font-family: Arial, sans-serif;
     height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Вирівнювання по вертикалі */
     overflow: hidden; /* Запобігаємо прокручуванню сторінки */
 }
 
@@ -16,7 +19,8 @@ body {
     display: flex;
     justify-content: space-between;
     width: 80%;
-    height: 100vh; /* Задаємо висоту для контейнера, щоб повністю заповнити екран */
+    height: 90vh; /* Задаємо висоту контейнера */
+    max-width: 1200px; /* Максимальна ширина для великих екранів */
 }
 
 .slider {
@@ -24,7 +28,7 @@ body {
     flex-direction: column;
     align-items: center;
     width: 45%;
-    height: 90vh; /* Обмежуємо висоту слайдерів, щоб вони не виходили за межі екрану */
+    height: 100%; /* Повна висота слайдера */
     overflow-y: scroll; /* Додаємо вертикальне прокручування для слайдерів */
     scrollbar-width: thin; /* Для кращого вигляду смуги прокрутки */
 }
