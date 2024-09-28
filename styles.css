@@ -27,7 +27,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 45%;
+    width: 45%; /* Дві колонки по 45% ширини кожна */
     height: 100%; /* Повна висота слайдера */
     overflow-y: scroll; /* Додаємо вертикальне прокручування для слайдерів */
     scrollbar-width: thin; /* Для кращого вигляду смуги прокрутки */
@@ -76,16 +76,13 @@ body {
     background-color: #555;
 }
 
+/* Адаптація для мобільних пристроїв */
 @media (max-width: 768px) {
     .container {
-        flex-direction: column;
-        width: 90%;
-        height: auto;
+        width: 100%; /* Повна ширина контейнера для мобільних */
     }
 
     .slider {
-        width: 100%;
-        margin-bottom: 20px;
-        height: 50vh; /* Для мобільних пристроїв висота колонок може бути меншою */
+        width: 48%; /* Колонки будуть трохи вужчими, щоб вміститися на екрані */
     }
 }
