@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const resultMessage = document.getElementById('result-message');
     const restartGameBtn = document.getElementById('restart-game-btn');
 
+
+    
     // Перевіряємо, чи є пошта в localStorage
     if (localStorage.getItem('email')) {
         emailBlock.style.display = 'none';
