@@ -66,12 +66,6 @@ h2 {
     object-fit: cover;
 }
 
-.selected {
-    opacity: 1 !important;
-    border-color: #f39c12 !important;
-    transform: scale(1.1) !important;
-}
-
 .correct {
     box-shadow: 0 0 15px 5px green;
 }
@@ -119,5 +113,8 @@ h2 {
 .animal-slider .slide img.selected {
     transform: scale(1.1);
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-    cursor: default;
+    cursor: pointer;
+    opacity: 1 ;
+    border-color: #f39c12 ;
+    transform: scale(1.1) ;
 }

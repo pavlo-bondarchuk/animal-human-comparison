@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const animalsToShow = [correctAnimal, ...randomAnimals];
         shuffle(animalsToShow).forEach(animal => {
-            animal.classList.remove('hidden', 'selected', 'correct', 'wrong'); // Видаляємо всі попередні класи
+            animal.classList.remove('hidden', 'selected', 'correct', 'wrong');
             animalContainer.appendChild(animal);
         });
     }
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const animalId = selectedAnimal.id.split('-')[1];
             const humanId = selectedHuman.id.split('-')[1];
 
-            selectedAnimal.querySelector('img').classList.add('selected'); // Додаємо клас вибору
+            selectedAnimal.querySelector('img').classList.add('selected');
 
             if (animalId === humanId) {
                 selectedAnimal.classList.add('correct');
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
             gameResults.push(resultText);
 
             setTimeout(() => {
-                resetSelection(); // Повертаємо класи до початкового стану
+                resetSelection();
                 if (animalSlides.length >= 3) {
                     showRandomHuman();
                 } else {
@@ -93,6 +93,9 @@ document.addEventListener("DOMContentLoaded", function() {
         if (selectedHuman) {
             selectedHuman.classList.remove('selected', 'correct', 'wrong');
         }
+        document.querySelectorAll('.animal-slider .slide img').forEach(animal => {
+            animal.classList.remove('selected', 'correct', 'wrong');
+        });
         selectedHuman = null;
     }
 
