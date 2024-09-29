@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let selectedHuman = null;
     let correctPairs = 0;
     let usedHumanIndexes = [];
-    let currentAnimalIndex = 0;
+    let currentHumanIndex = 0;
 
     function showRandomHuman() {
         let randomIndex;
@@ -27,25 +27,27 @@ document.addEventListener("DOMContentLoaded", function() {
             humanSlides.forEach(human => human.classList.add('hidden'));
             randomHuman.classList.remove('hidden');
             selectedHuman = randomHuman;
+            showNextThreeAnimals(randomHuman.id);  // Показуємо відповідну пару тварини і 2 додаткові тварини
         } else {
             endGame();
         }
     }
 
-    function showNextThreeAnimals() {
+    function showNextThreeAnimals(humanId) {
         document.querySelectorAll('.animal-slider .slide').forEach(slide => {
             slide.remove();
         });
 
-        const animalsToShow = animalSlides.slice(currentAnimalIndex, currentAnimalIndex + 3);
-        animalsToShow.forEach(animal => {
+        const correctAnimal = animalSlides.find(animal => animal.id === humanId.replace('human', 'animal'));
+
+        let randomAnimals = animalSlides.filter(animal => animal !== correctAnimal);
+        randomAnimals = shuffle(randomAnimals).slice(0, 2);  // Вибираємо 2 випадкових тварини для заплутування
+
+        const animalsToShow = [correctAnimal, ...randomAnimals];
+        shuffle(animalsToShow).forEach(animal => {
             animal.classList.remove('hidden', 'selected');
             animalContainer.appendChild(animal);
         });
-        currentAnimalIndex += 3;
-        if (currentAnimalIndex >= animalSlides.length) {
-            currentAnimalIndex = 0;
-        }
     }
 
     humanSlides.forEach(human => {
@@ -53,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!selectedHuman) {
                 selectedHuman = this;
                 selectedHuman.classList.add('selected');
-                showNextThreeAnimals();
+                showNextThreeAnimals(selectedHuman.id);
             }
         });
     });
@@ -72,6 +74,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 selectedHuman.classList.add('correct');
                 correctPairs++;
                 resultText = `✅ Людина: ${humanAlt} і Тварина: ${animalAlt} — Вірна пара`;
+
+                // Прибираємо вірну пару
+                animalSlides = animalSlides.filter(animal => animal !== selectedAnimal);
+                usedHumanIndexes.push(humanSlides[currentHumanIndex]);
+
             } else {
                 selectedAnimal.classList.add('wrong');
                 selectedHuman.classList.add('wrong');
@@ -79,8 +86,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             gameResults.push(resultText);
-
-            animalSlides = animalSlides.filter(animal => animal !== selectedAnimal);
 
             setTimeout(() => {
                 resetSelection();
@@ -98,6 +103,14 @@ document.addEventListener("DOMContentLoaded", function() {
             selectedHuman.classList.remove('selected', 'correct', 'wrong');
         }
         selectedHuman = null;
+    }
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
 
     function endGame() {
@@ -145,5 +158,4 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     showRandomHuman();
-    showNextThreeAnimals();
 });
