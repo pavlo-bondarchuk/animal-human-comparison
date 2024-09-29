@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
             humanSlides.forEach(human => human.classList.add('hidden'));
             randomHuman.classList.remove('hidden');
             selectedHuman = randomHuman;
-            showNextThreeAnimals(randomHuman.id);  // Показуємо відповідну пару тварини і 2 додаткові тварини
+            showNextThreeAnimals(randomHuman.id);
         } else {
             endGame();
         }
@@ -41,24 +41,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const correctAnimal = animalSlides.find(animal => animal.id === humanId.replace('human', 'animal'));
 
         let randomAnimals = animalSlides.filter(animal => animal !== correctAnimal);
-        randomAnimals = shuffle(randomAnimals).slice(0, 2);  // Вибираємо 2 випадкових тварини для заплутування
+        randomAnimals = shuffle(randomAnimals).slice(0, 2);
 
         const animalsToShow = [correctAnimal, ...randomAnimals];
         shuffle(animalsToShow).forEach(animal => {
-            animal.classList.remove('hidden', 'selected');
+            animal.classList.remove('hidden', 'selected', 'correct', 'wrong'); // Видаляємо всі попередні класи
             animalContainer.appendChild(animal);
         });
     }
-
-    humanSlides.forEach(human => {
-        human.addEventListener('click', function() {
-            if (!selectedHuman) {
-                selectedHuman = this;
-                selectedHuman.classList.add('selected');
-                showNextThreeAnimals(selectedHuman.id);
-            }
-        });
-    });
 
     animalContainer.addEventListener('click', function(e) {
         const selectedAnimal = e.target.closest('.slide');
@@ -69,13 +59,14 @@ document.addEventListener("DOMContentLoaded", function() {
             const animalId = selectedAnimal.id.split('-')[1];
             const humanId = selectedHuman.id.split('-')[1];
 
+            selectedAnimal.querySelector('img').classList.add('selected'); // Додаємо клас вибору
+
             if (animalId === humanId) {
                 selectedAnimal.classList.add('correct');
                 selectedHuman.classList.add('correct');
                 correctPairs++;
                 resultText = `✅ Людина: ${humanAlt} і Тварина: ${animalAlt} — Вірна пара`;
 
-                // Прибираємо вірну пару
                 animalSlides = animalSlides.filter(animal => animal !== selectedAnimal);
                 usedHumanIndexes.push(humanSlides[currentHumanIndex]);
 
@@ -88,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
             gameResults.push(resultText);
 
             setTimeout(() => {
-                resetSelection();
+                resetSelection(); // Повертаємо класи до початкового стану
                 if (animalSlides.length >= 3) {
                     showRandomHuman();
                 } else {
