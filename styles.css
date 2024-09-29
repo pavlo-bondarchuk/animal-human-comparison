@@ -108,13 +108,14 @@ body {
 .animal-slider .slide img:hover {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
-
+.animal-slider .slide img:hover {
+    transform: scale(2);
+  }
 .human-slider img.selected,
 .animal-slider .slide img.selected {
     transform: scale(1.1);
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
     cursor: pointer;
     opacity: 1 ;
-    border-color: #f39c12 ;
     transform: scale(1.1) ;
 }
