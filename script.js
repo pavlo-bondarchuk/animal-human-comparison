@@ -2,9 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const resultMessage = document.getElementById('result-message');
     const restartGameBtn = document.getElementById('restart-game-btn');
 
-    const botToken = '7722163534:AAGY0-L6uHrqmc_tjbxyt9fTT57kkYzfm-M'; 
-    const chatId = '283348659'; 
-
     let gameResults = [];
     let animalSlides = Array.from(document.querySelectorAll('.animal-slider .slide'));
     const humanSlides = document.querySelectorAll('.human-slider .slide');
@@ -111,45 +108,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const resultText = `Дякую за гру! Вірних пар: ${correctPairs}`;
         resultMessage.querySelector('p').innerText = resultText;
         resultMessage.style.display = 'block';
-        sendTelegramMessage();
     }
 
     restartGameBtn.addEventListener('click', () => {
         location.reload();
     });
-
-    function sendTelegramMessage() {
-        const message = `
-        Результати гри:\n
-        ${gameResults.join('\n')}\n
-        Всього вірних пар: ${correctPairs}
-        `;
-
-        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-        const data = {
-            chat_id: chatId,
-            text: message
-        };
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.ok) {
-                console.log("Message sent to Telegram successfully!");
-            } else {
-                console.log("Failed to send message to Telegram.");
-            }
-        })
-        .catch(error => {
-            console.error("Error sending message to Telegram:", error);
-        });
-    }
 
     showRandomHuman();
 });
