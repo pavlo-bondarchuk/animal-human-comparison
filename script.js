@@ -12,33 +12,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let selectedHuman = null;
   let correctPairs = 0;
-  let currentHumanIndex = 0;
+  let usedHumanIndexes = [];
+  let currentAnimalIndex = 0;
 
-  function showRandomAnimals() {
-    animalContainer.innerHTML = "<h2>Animal Photos</h2>";
-    const animalsArray = Array.from(animalSlides);
-    const randomAnimals = [];
-    for (let i = 0; i < 3; i++) {
-      const randomIndex = Math.floor(Math.random() * animalsArray.length);
-      randomAnimals.push(animalsArray[randomIndex]);
-      animalsArray.splice(randomIndex, 1);
+  // Функція для випадкового вибору людини
+  function showRandomHuman() {
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * humanSlides.length);
+    } while (usedHumanIndexes.includes(randomIndex) && usedHumanIndexes.length < humanSlides.length);
+
+    if (usedHumanIndexes.length < humanSlides.length) {
+      usedHumanIndexes.push(randomIndex);
+      const randomHuman = humanSlides[randomIndex];
+      humanSlides.forEach((human) => human.classList.add("hidden"));
+      randomHuman.classList.remove("hidden");
+      selectedHuman = randomHuman;
+    } else {
+      endGame();
     }
-    randomAnimals.forEach((animal) => {
+  }
+
+  // Функція для відображення по 3 тварини
+  function showNextThreeAnimals() {
+    animalContainer.innerHTML = "<h2>Animal Photos</h2>";
+    const animalsToShow = Array.from(animalSlides).slice(
+      currentAnimalIndex,
+      currentAnimalIndex + 3
+    );
+    animalsToShow.forEach((animal) => {
       animal.classList.remove("hidden", "selected");
       animalContainer.appendChild(animal);
     });
+    currentAnimalIndex += 3;
+    if (currentAnimalIndex >= animalSlides.length) {
+      currentAnimalIndex = 0;
+    }
   }
 
+  // Вибір людини і відображення 3 випадкових тварин
   humanSlides.forEach((human) => {
     human.addEventListener("click", function () {
       if (!selectedHuman) {
         selectedHuman = this;
         selectedHuman.classList.add("selected");
-        showRandomAnimals();
+        showNextThreeAnimals();
       }
     });
   });
 
+  // Вибір тварини та порівняння результатів
   animalContainer.addEventListener("click", function (e) {
     const selectedAnimal = e.target.closest(".slide");
     if (selectedAnimal && selectedHuman) {
@@ -63,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       setTimeout(() => {
         resetSelection();
-        showNextHumanSlide();
+        showRandomHuman(); // Відображаємо нове випадкове фото людини
       }, 1000);
     }
   });
@@ -73,16 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedHuman.classList.remove("selected", "correct", "wrong");
     }
     selectedHuman = null;
-  }
-
-  function showNextHumanSlide() {
-    humanSlides[currentHumanIndex].classList.add("hidden");
-    currentHumanIndex++;
-    if (currentHumanIndex >= humanSlides.length) {
-      endGame();
-    } else {
-      humanSlides[currentHumanIndex].classList.remove("hidden");
-    }
   }
 
   function endGame() {
@@ -128,4 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Error sending message to Telegram:", error);
       });
   }
+
+  showRandomHuman();
+  showNextThreeAnimals();
 });
