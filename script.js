@@ -1,30 +1,22 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const resultMessage = document.getElementById('result-message');
     const restartGameBtn = document.getElementById('restart-game-btn');
 
-    let gameResults = [];
     let animalSlides = Array.from(document.querySelectorAll('.animal-slider .slide'));
     const humanSlides = document.querySelectorAll('.human-slider .slide');
     const animalContainer = document.querySelector('.animal-slider');
 
     let selectedHuman = null;
     let correctPairs = 0;
-    let usedHumanIndexes = [];
     let currentHumanIndex = 0;
 
-    function showRandomHuman() {
-        let randomIndex;
-        do {
-            randomIndex = Math.floor(Math.random() * humanSlides.length);
-        } while (usedHumanIndexes.includes(randomIndex) && usedHumanIndexes.length < humanSlides.length);
-        
-        if (usedHumanIndexes.length < humanSlides.length) {
-            usedHumanIndexes.push(randomIndex);
-            const randomHuman = humanSlides[randomIndex];
+    function showNextHuman() {
+        if (currentHumanIndex < humanSlides.length) {
+            const nextHuman = humanSlides[currentHumanIndex];
             humanSlides.forEach(human => human.classList.add('hidden'));
-            randomHuman.classList.remove('hidden');
-            selectedHuman = randomHuman;
-            showNextThreeAnimals(randomHuman.id);
+            nextHuman.classList.remove('hidden');
+            selectedHuman = nextHuman;
+            showNextThreeAnimals(nextHuman.id);
+            currentHumanIndex++;
         } else {
             endGame();
         }
@@ -50,9 +42,6 @@ document.addEventListener("DOMContentLoaded", function() {
     animalContainer.addEventListener('click', function(e) {
         const selectedAnimal = e.target.closest('.slide');
         if (selectedAnimal && selectedHuman) {
-            const animalAlt = selectedAnimal.querySelector('img').alt;
-            const humanAlt = selectedHuman.querySelector('img').alt;
-            let resultText;
             const animalId = selectedAnimal.id.split('-')[1];
             const humanId = selectedHuman.id.split('-')[1];
 
@@ -62,23 +51,18 @@ document.addEventListener("DOMContentLoaded", function() {
                 selectedAnimal.classList.add('correct');
                 selectedHuman.classList.add('correct');
                 correctPairs++;
-                resultText = `✅ Людина: ${humanAlt} і Тварина: ${animalAlt} — Вірна пара`;
 
                 animalSlides = animalSlides.filter(animal => animal !== selectedAnimal);
-                usedHumanIndexes.push(humanSlides[currentHumanIndex]);
 
             } else {
                 selectedAnimal.classList.add('wrong');
                 selectedHuman.classList.add('wrong');
-                resultText = `❌ Людина: ${humanAlt} і Тварина: ${animalAlt} — Невірна пара`;
             }
-
-            gameResults.push(resultText);
 
             setTimeout(() => {
                 resetSelection();
                 if (animalSlides.length >= 3) {
-                    showRandomHuman();
+                    showNextHuman();
                 } else {
                     endGame();
                 }
@@ -105,14 +89,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function endGame() {
-        const resultText = `Дякую за гру! Вірних пар: ${correctPairs}`;
-        resultMessage.querySelector('p').innerText = resultText;
-        resultMessage.style.display = 'block';
+        alert(`Гра завершена! Вірних пар: ${correctPairs}`);
     }
 
     restartGameBtn.addEventListener('click', () => {
         location.reload();
     });
 
-    showRandomHuman();
+    showNextHuman();
 });
