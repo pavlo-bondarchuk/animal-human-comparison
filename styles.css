@@ -133,14 +133,16 @@ body {
     .container {
         flex-direction: column;
     }
-
+    .human-slider img {
+        width: 80%;
+    }
     .animal-slider {
         flex-direction: row;
+        gap: 0;
     }
 
     .animal-slider .slide {
         width: 50%;
-        gap: 0;
         padding: 10px;
     }
 
