@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
+    const resultMessage = document.getElementById('result-message');
     const restartGameBtn = document.getElementById('restart-game-btn');
 
+    let gameResults = [];
     let animalSlides = Array.from(document.querySelectorAll('.animal-slider .slide'));
     const humanSlides = document.querySelectorAll('.human-slider .slide');
     const animalContainer = document.querySelector('.animal-slider');
@@ -16,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
             nextHuman.classList.remove('hidden');
             selectedHuman = nextHuman;
             showNextThreeAnimals(nextHuman.id);
-            currentHumanIndex++;
+            currentHumanIndex++; 
         } else {
             endGame();
         }
@@ -42,6 +44,9 @@ document.addEventListener("DOMContentLoaded", function() {
     animalContainer.addEventListener('click', function(e) {
         const selectedAnimal = e.target.closest('.slide');
         if (selectedAnimal && selectedHuman) {
+            const animalAlt = selectedAnimal.querySelector('img').alt;
+            const humanAlt = selectedHuman.querySelector('img').alt;
+            let resultText;
             const animalId = selectedAnimal.id.split('-')[1];
             const humanId = selectedHuman.id.split('-')[1];
 
@@ -51,13 +56,17 @@ document.addEventListener("DOMContentLoaded", function() {
                 selectedAnimal.classList.add('correct');
                 selectedHuman.classList.add('correct');
                 correctPairs++;
+                resultText = `✅ Людина: ${humanAlt} і Тварина: ${animalAlt} — Вірна пара`;
 
                 animalSlides = animalSlides.filter(animal => animal !== selectedAnimal);
 
             } else {
                 selectedAnimal.classList.add('wrong');
                 selectedHuman.classList.add('wrong');
+                resultText = `❌ Людина: ${humanAlt} і Тварина: ${animalAlt} — Невірна пара`;
             }
+
+            gameResults.push(resultText);
 
             setTimeout(() => {
                 resetSelection();
@@ -89,7 +98,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function endGame() {
-        alert(`Гра завершена! Вірних пар: ${correctPairs}`);
+        const resultText = `Дякую за гру! Вірних пар: ${correctPairs}`;
+        resultMessage.querySelector('p').innerText = resultText;
+        resultMessage.style.display = 'block';
     }
 
     restartGameBtn.addEventListener('click', () => {
