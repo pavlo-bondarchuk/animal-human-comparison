@@ -1,75 +1,50 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const emailBlock = document.getElementById("email-block");
-  const startGameBtn = document.getElementById("start-game-btn");
-  const emailInput = document.getElementById("email-input");
   const resultMessage = document.getElementById("result-message");
   const restartGameBtn = document.getElementById("restart-game-btn");
 
-  const botToken = "7722163534:AAGY0-L6uHrqmc_tjbxyt9fTT57kkYzfm-M"; // Ваш токен
-  const chatId = "283348659"; // Ваш Chat ID
+  const botToken = "7722163534:AAGY0-L6uHrqmc_tjbxyt9fTT57kkYzfm-M";
+  const chatId = "283348659";
 
-  let email = ""; // Змінна для збереження пошти користувача
-  let gameResults = []; // Масив для результатів гри
-
-  // Перевіряємо, чи є пошта в localStorage
-  if (localStorage.getItem("email")) {
-    email = localStorage.getItem("email");
-    emailBlock.style.display = "none";
-  }
-
-  // Обробка введення пошти
-  startGameBtn.addEventListener("click", () => {
-    email = emailInput.value;
-    if (email) {
-      localStorage.setItem("email", email);
-      emailBlock.style.display = "none";
-    } else {
-      alert("Please enter a valid email.");
-    }
-  });
-
+  let gameResults = [];
   const animalSlides = document.querySelectorAll(".animal-slider .slide");
   const humanSlides = document.querySelectorAll(".human-slider .slide");
-  let selectedAnimal = null;
+  const animalContainer = document.querySelector(".animal-slider");
+
   let selectedHuman = null;
   let correctPairs = 0;
   let currentHumanIndex = 0;
 
-  // Показуємо перше фото людини
-  humanSlides.forEach((human, index) => {
-    if (index !== 0) {
-      human.classList.add("hidden");
+  function showRandomAnimals() {
+    animalContainer.innerHTML = "<h2>Animal Photos</h2>";
+    const animalsArray = Array.from(animalSlides);
+    const randomAnimals = [];
+    for (let i = 0; i < 3; i++) {
+      const randomIndex = Math.floor(Math.random() * animalsArray.length);
+      randomAnimals.push(animalsArray[randomIndex]);
+      animalsArray.splice(randomIndex, 1);
     }
-  });
-
-  animalSlides.forEach((animal) => {
-    animal.addEventListener("click", function () {
-      if (selectedAnimal) {
-        selectedAnimal.classList.remove("selected");
-      }
-      selectedAnimal = this;
-      selectedAnimal.classList.add("selected");
-      compareSelection();
+    randomAnimals.forEach((animal) => {
+      animal.classList.remove("hidden", "selected");
+      animalContainer.appendChild(animal);
     });
-  });
+  }
 
   humanSlides.forEach((human) => {
     human.addEventListener("click", function () {
-      if (!selectedHuman && human.classList.contains("hidden") === false) {
+      if (!selectedHuman) {
         selectedHuman = this;
         selectedHuman.classList.add("selected");
+        showRandomAnimals();
       }
-      compareSelection();
     });
   });
 
-  function compareSelection() {
+  animalContainer.addEventListener("click", function (e) {
+    const selectedAnimal = e.target.closest(".slide");
     if (selectedAnimal && selectedHuman) {
-      const animalAlt = selectedAnimal.querySelector("img").alt; // Ім'я тварини з alt
-      const humanAlt = selectedHuman.querySelector("img").alt; // Ім'я людини з alt
+      const animalAlt = selectedAnimal.querySelector("img").alt;
+      const humanAlt = selectedHuman.querySelector("img").alt;
       let resultText;
-
-      // Порівнюємо ID зображень
       const animalId = selectedAnimal.id.split("-")[1];
       const humanId = selectedHuman.id.split("-")[1];
 
@@ -84,7 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
         resultText = `❌ Людина: ${humanAlt} і Тварина: ${animalAlt} — Невірна пара`;
       }
 
-      // Додаємо результат до масиву
       gameResults.push(resultText);
 
       setTimeout(() => {
@@ -92,17 +66,12 @@ document.addEventListener("DOMContentLoaded", function () {
         showNextHumanSlide();
       }, 1000);
     }
-  }
+  });
 
   function resetSelection() {
-    if (selectedAnimal) {
-      selectedAnimal.classList.remove("selected", "correct", "wrong");
-      selectedAnimal.classList.add("hidden"); // Приховуємо вибрану тварину
-    }
     if (selectedHuman) {
       selectedHuman.classList.remove("selected", "correct", "wrong");
     }
-    selectedAnimal = null;
     selectedHuman = null;
   }
 
@@ -120,24 +89,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const resultText = `Дякую за гру! Вірних пар: ${correctPairs}`;
     resultMessage.querySelector("p").innerText = resultText;
     resultMessage.style.display = "block";
-
-    // Відправляємо результат у Telegram
     sendTelegramMessage();
   }
 
-  // Перезапуск гри
   restartGameBtn.addEventListener("click", () => {
-    location.reload(); // Перезапуск гри
+    location.reload();
   });
 
-  // Функція для відправки повідомлення у Telegram
   function sendTelegramMessage() {
     const message = `
-        Email: ${email}\n
-        Результати гри:\n
-        ${gameResults.join("\n")}\n
-        Всього вірних пар: ${correctPairs}
-        `;
+      Результати гри:\n
+      ${gameResults.join("\n")}\n
+      Всього вірних пар: ${correctPairs}
+      `;
 
     const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
     const data = {
