@@ -69,11 +69,11 @@ body {
 }
 
 .correct {
-    background-color: green!important;
+    background-color: green !important;
 }
 
 .wrong {
-    background-color: red!important;
+    background-color: red !important;
 }
 
 .hidden {
@@ -129,13 +129,16 @@ body {
     opacity: 1;
     transform: scale(1.1);
 }
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
     }
+
     .human-slider img {
         width: 80%;
     }
+
     .animal-slider {
         flex-direction: row;
         gap: 0;
@@ -149,5 +152,9 @@ body {
     .animal-slider .slide img {
         width: 100%;
     }
-    
+
+    #result-message {
+        min-width: 80%;
+    }
+
 }
