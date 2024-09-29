@@ -31,20 +31,28 @@ body {
     text-align: center;
 }
 
-.animal-slider {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+.human-slider img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
-.slide {
+.animal-slider {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.animal-slider .slide {
     margin: 10px;
     opacity: 0.7;
     transition: opacity 0.3s ease;
 }
 
-.slide img {
+.animal-slider .slide img {
     max-width: 100px;
+    height: 100px;
     border: 2px solid transparent;
     border-radius: 10px;
     transition: border-color 0.3s ease;

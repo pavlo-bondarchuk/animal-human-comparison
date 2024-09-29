@@ -5,14 +5,15 @@ document.addEventListener("DOMContentLoaded", function() {
   const botToken = '7722163534:AAGY0-L6uHrqmc_tjbxyt9fTT57kkYzfm-M'; 
   const chatId = '283348659'; 
 
-  let gameResults = []; 
-  const animalSlides = document.querySelectorAll('.animal-slider .slide');
+  let gameResults = [];
+  let animalSlides = Array.from(document.querySelectorAll('.animal-slider .slide')); // Масив для всіх тварин
   const humanSlides = document.querySelectorAll('.human-slider .slide');
-  const animalContainer = document.querySelector('.animal-slider'); 
+  const animalContainer = document.querySelector('.animal-slider');
 
   let selectedHuman = null;
   let correctPairs = 0;
   let usedHumanIndexes = [];
+  let currentAnimalIndex = 0;
 
   // Функція для випадкового вибору людини
   function showRandomHuman() {
@@ -32,20 +33,18 @@ document.addEventListener("DOMContentLoaded", function() {
       }
   }
 
-  // Функція для випадкового вибору 3 тварин
-  function showRandomThreeAnimals() {
+  // Функція для відображення по 3 тварини, прибираючи обрані зі списку
+  function showNextThreeAnimals() {
       animalContainer.innerHTML = '<h2>Animal Photos</h2>';
-      const animalsArray = Array.from(animalSlides);
-      const randomAnimals = [];
-      for (let i = 0; i < 3; i++) {
-          const randomIndex = Math.floor(Math.random() * animalsArray.length);
-          randomAnimals.push(animalsArray[randomIndex]);
-          animalsArray.splice(randomIndex, 1); // Видаляємо вибрану тварину, щоб уникнути повторів
-      }
-      randomAnimals.forEach(animal => {
+      const animalsToShow = animalSlides.slice(currentAnimalIndex, currentAnimalIndex + 3);
+      animalsToShow.forEach(animal => {
           animal.classList.remove('hidden', 'selected');
           animalContainer.appendChild(animal);
       });
+      currentAnimalIndex += 3;
+      if (currentAnimalIndex >= animalSlides.length) {
+          currentAnimalIndex = 0; // Показуємо тварин по колу, якщо всі вже були показані
+      }
   }
 
   // Вибір людини і відображення 3 випадкових тварин
@@ -54,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
           if (!selectedHuman) {
               selectedHuman = this;
               selectedHuman.classList.add('selected');
-              showRandomThreeAnimals();
+              showNextThreeAnimals();
           }
       });
   });
@@ -82,9 +81,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
           gameResults.push(resultText);
 
+          // Прибираємо вибрану тварину зі списку
+          animalSlides = animalSlides.filter(animal => animal !== selectedAnimal);
+
           setTimeout(() => {
               resetSelection();
-              showRandomHuman(); // Відображаємо нове випадкове фото людини
+              if (animalSlides.length >= 3) {
+                  showRandomHuman(); // Показуємо нове випадкове фото людини
+              } else {
+                  endGame();
+              }
           }, 1000);
       }
   });
@@ -142,5 +148,5 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Запускаємо гру з показу випадкової людини та 3 тварин
   showRandomHuman();
-  showRandomThreeAnimals();
+  showNextThreeAnimals();
 });
