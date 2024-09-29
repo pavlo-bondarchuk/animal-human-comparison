@@ -23,9 +23,11 @@ body {
     height: 100vh;
 }
 
-.human-slider, .animal-slider {
+.human-slider,
+.animal-slider {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
     width: 100%;
     text-align: center;
