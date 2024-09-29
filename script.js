@@ -35,7 +35,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Функція для відображення по 3 тварини, прибираючи обрані зі списку
   function showNextThreeAnimals() {
-      animalContainer.innerHTML = '<h2>Animal Photos</h2>';
+      // Видаляємо попередні зображення тварин, але залишаємо заголовок
+      if (!document.querySelector('.animal-slider h2')) {
+          const animalTitle = document.createElement('h2');
+          animalTitle.textContent = 'Animal Photos';
+          animalContainer.insertBefore(animalTitle, animalContainer.firstChild);
+      }
+
+      // Очищаємо всі попередні слайди тварин
+      document.querySelectorAll('.animal-slider .slide').forEach(slide => {
+          slide.remove();
+      });
+
       const animalsToShow = animalSlides.slice(currentAnimalIndex, currentAnimalIndex + 3);
       animalsToShow.forEach(animal => {
           animal.classList.remove('hidden', 'selected');
