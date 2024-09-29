@@ -157,7 +157,7 @@ body {
         min-width: 80%;
     }
     .animal-slider .slide:hover {
-        transform-origin: left;
+        transform-origin: top;
     }
 
 }
