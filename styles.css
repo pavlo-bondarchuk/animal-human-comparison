@@ -23,6 +23,10 @@ body {
     height: 100vh;
 }
 
+h2 {
+    margin-bottom: 20px;
+}
+
 .human-slider,
 .animal-slider {
     display: flex;
@@ -34,7 +38,7 @@ body {
 }
 
 .human-slider img {
-    width: 200px;
+    width: 350px;
     height: auto;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -58,6 +62,7 @@ body {
     border: 2px solid transparent;
     border-radius: 10px;
     transition: border-color 0.3s ease;
+    object-fit: cover;
 }
 
 .selected {
