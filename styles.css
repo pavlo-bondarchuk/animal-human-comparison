@@ -110,6 +110,7 @@ body {
 }
 .animal-slider .slide img:hover {
     transform: scale(2);
+    transform-origin: left;
   }
 .human-slider img.selected,
 .animal-slider .slide img.selected {
