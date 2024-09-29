@@ -69,6 +69,7 @@ h2 {
 .selected {
     opacity: 1 !important;
     border-color: #f39c12 !important;
+    transform: scale(1.1) !important;
 }
 
 .correct {
@@ -111,7 +112,12 @@ h2 {
 
 .human-slider img:hover,
 .animal-slider .slide img:hover {
-    transform: scale(1.1);
-    cursor: pointer;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.human-slider img.selected,
+.animal-slider .slide img.selected {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    cursor: default;
 }
