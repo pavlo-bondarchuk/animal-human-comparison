@@ -58,20 +58,20 @@ body {
 
 .animal-slider .slide img {
     width: 250px;
-    height: 150px; /* Фіксуємо висоту для всіх зображень */
-    border: 2px solid transparent;
+    height: 150px;
+    border: 1px solid transparent;
     border-radius: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    object-fit: contain; /* Забезпечує повний показ тварини без обрізання */
-    background-color: #222; /* Додаємо фон для порожнього простору навколо зображення */
+    object-fit: contain;
+    background-color: #222;
 }
 
 .correct {
-    box-shadow: 0 0 15px 5px green;
+    border: 1px solid green;
 }
 
 .wrong {
-    box-shadow: 0 0 15px 5px red;
+    border: 1px solid red;
 }
 
 .hidden {
@@ -106,17 +106,19 @@ body {
 
 .human-slider img:hover,
 .animal-slider .slide img:hover {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.6);
 }
+
 .animal-slider .slide img:hover {
     transform: scale(2);
     transform-origin: left;
-  }
+}
+
 .human-slider img.selected,
 .animal-slider .slide img.selected {
     transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.6);
     cursor: pointer;
-    opacity: 1 ;
-    transform: scale(1.1) ;
+    opacity: 1;
+    transform: scale(1.1);
 }
