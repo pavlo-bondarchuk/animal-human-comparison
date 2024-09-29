@@ -38,7 +38,7 @@ body {
     height: auto;
     border-radius: 10px;
     margin-bottom: 0;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .animal-slider {
@@ -53,7 +53,7 @@ body {
 .animal-slider .slide {
     margin: 0;
     opacity: 1;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .animal-slider .slide img {
@@ -62,18 +62,18 @@ body {
     height: 150px;
     border: 1px solid transparent;
     border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: all 0.3s ease;
     object-fit: contain;
     background-color: #222;
     z-index: 0;
 }
 
 .correct {
-    border: 1px solid green;
+    background-color: green;
 }
 
 .wrong {
-    border: 1px solid red;
+    background-color: red;
 }
 
 .hidden {
@@ -112,7 +112,7 @@ body {
 }
 
 .animal-slider .slide img:hover {
-    transform: scale(2);
+    zoom: 2;
     transform-origin: left;
     z-index: 10;
     position: relative;
